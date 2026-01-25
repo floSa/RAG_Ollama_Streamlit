@@ -9,31 +9,41 @@ import json
 
 # Configuration
 DB_CONFIG = {
-    'host': os.getenv('DB_HOST', 'localhost'),
-    'port': int(os.getenv('DB_PORT', 5432)),
-    'user': os.getenv('DB_USER', 'postgres'),
-    'password': os.getenv('DB_PASSWORD', 'postgres'),
+    'host': os.environ['DB_HOST'],
+    'port': int(os.environ['DB_PORT']),
+    'user': os.environ['DB_USER'],
+    'password': os.environ['DB_PASSWORD'],
     'dbname': 'postgres'  # Connexion initiale sur postgres
 }
-TARGET_DB = os.getenv('DB_NAME', 'rag_db')
-OLLAMA_BASE = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
+TARGET_DB = os.environ['DB_NAME']
+OLLAMA_BASE = os.environ['OLLAMA_HOST']
 
-def wait_for_ollama():
-    """Attendre qu'Ollama soit disponible"""
-    max_attempts = 30
+def ensure_ollama_and_models():
+    """Attendre qu'Ollama soit disponible et que le modèle de base soit chargé"""
+    max_attempts = 60  # Augmenté à 60 tentatives (2 minutes) pour laisser le temps au pull
+    required_model = "nomic-embed-text"
+    
     for attempt in range(max_attempts):
         try:
             response = requests.get(f"{OLLAMA_BASE}/api/tags", timeout=5)
             if response.status_code == 200:
-                print("✓ Ollama est disponible")
-                return True
+                models = response.json().get('models', [])
+                model_names = [m['name'] for m in models]
+                
+                # Vérifier si le modèle requis est présent (ex: nomic-embed-text:latest)
+                if any(required_model in name for name in model_names):
+                    print(f"✓ Ollama est prêt et le modèle '{required_model}' est disponible")
+                    return True
+                else:
+                    print(f"Ollama est en ligne mais '{required_model}' est manquant/en cours de téléchargement...")
+            
         except requests.exceptions.RequestException:
             pass
         
-        print(f"Attente d'Ollama ({attempt+1}/{max_attempts})...")
+        print(f"Attente d'Ollama et des modèles ({attempt+1}/{max_attempts})...")
         time.sleep(2)
     
-    raise Exception("Timeout: Ollama non disponible")
+    raise Exception(f"Timeout: Ollama ou le modèle '{required_model}' non disponible après {max_attempts*2}s")
 
 def create_database():
     """Créer la base de données si elle n'existe pas"""
@@ -165,8 +175,8 @@ def main():
     try:
         print("=== Initialisation de la base de données ===")
         
-        # Attendre Ollama
-        wait_for_ollama()
+        # Attendre Ollama et les modèles
+        ensure_ollama_and_models()
         
         # Créer la base de données
         create_database()
