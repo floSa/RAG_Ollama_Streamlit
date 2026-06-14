@@ -43,7 +43,7 @@ Vous verrez :
 
 ## 3. Accès à l'application
 
-Ouvrez votre navigateur : **http://localhost:8501**
+Ouvrez votre navigateur : **http://localhost:8502**
 
 ## 4. Utilisation
 
