@@ -1,11 +1,17 @@
-# RAG Ollama Streamlit 🎬
-
-![Demo RAG](demo.gif)
+# RAG Ollama Streamlit
 
 **Application de RAG (Retrieval Augmented Generation) 100 % local : interrogez une base
 de films en langage naturel, avec Ollama, PostgreSQL (pgvector) et Streamlit.**
 
-## 📝 Description
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15_+_pgvector-4169E1?logo=postgresql&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28.1-FF4B4B?logo=streamlit&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-LLM_local-000000?logo=ollama&logoColor=white)
+
+![Demo RAG](demo.gif)
+
+## Description
 
 Ce projet permet d'interroger une base de connaissances de films en langage naturel. Il
 combine :
@@ -61,13 +67,13 @@ flowchart LR
 | [services/rag-python.md](documentation/services/rag-python.md) | Application Streamlit |
 | [QUICKSTART.md](QUICKSTART.md) | Démarrage rapide pas à pas |
 
-## 🛠️ Prérequis
+## Prérequis
 
 - **Docker** et **Docker Compose**
 - **NVIDIA Container Toolkit** (recommandé — une réservation GPU nvidia est déclarée
   dans le compose ; l'exécution CPU reste possible mais lente)
 
-## 🚀 Démarrage
+## Démarrage
 
 Le projet nécessite un fichier `.env` à la racine (voir [QUICKSTART.md](QUICKSTART.md)
 pour le contenu minimal ; aucun `.env.example` n'est versionné).
@@ -106,13 +112,13 @@ Variables lues dans `.env` (racine) :
 | `OLLAMA_HOST` | `http://ollama:11434` | URL de l'API Ollama utilisée par l'app |
 | `OLLAMA_PORT` | `11435` | Port hôte mappé vers `11434` (défini dans `docker-compose.yml`) |
 
-## 🎯 Fonctionnalités
+## Fonctionnalités
 
-- **💬 Chat RAG** : posez une question (« Quel film parle de rêves ? ») et obtenez une
+- **Chat RAG** : posez une question (« Quel film parle de rêves ? ») et obtenez une
   réponse générée par l'IA + les sources.
-- **⚡ Performance** : *connection pool* psycopg2 (1→10) pour une réactivité instantanée.
-- **🛡️ Robustesse** : démarrage sécurisé (attente du téléchargement des modèles).
-- **🗂️ Gestion** : import CSV (`title`, `synopsis`) et ajout manuel de films depuis la
+- **Performance** : *connection pool* psycopg2 (1→10) pour une réactivité instantanée.
+- **Robustesse** : démarrage sécurisé (attente du téléchargement des modèles).
+- **Gestion** : import CSV (`title`, `synopsis`) et ajout manuel de films depuis la
   sidebar.
 
 ## Tests
@@ -120,11 +126,11 @@ Variables lues dans `.env` (racine) :
 Aucun test automatisé n'est présent dans le dépôt à ce jour (voir la section
 « Limites » de [architecture.md](documentation/architecture.md#8-limites-connues--pistes)).
 
-## 📦 Structure du projet
+## Structure du projet
 
 ```text
 RAG_Ollama_Streamlit/
-├── .env                    # 🔐 Configuration et secrets (gitignoré)
+├── .env                    # Configuration et secrets (dans .gitignore mais versionné — voir SECURITY.md)
 ├── docker-compose.yml      # Orchestration des 3 services
 ├── data/
 │   └── films.csv           # Jeu de données initial

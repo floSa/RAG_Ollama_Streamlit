@@ -1,4 +1,4 @@
-# ⚡ Quickstart Guide
+# Quickstart Guide
 
 Ce guide vous permet de lancer le projet RAG rapidement.
 

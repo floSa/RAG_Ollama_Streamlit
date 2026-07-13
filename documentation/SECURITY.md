@@ -1,7 +1,8 @@
 # Sécurité — RAG Ollama Streamlit
 
-> Projet **local / démo**. Cette page liste la posture réelle et marque ⚠️ les risques
-> connus non traités. Elle ne prétend pas à un durcissement production.
+> Projet **local / démo**. Cette page liste la posture réelle et signale en clair
+> (« Risque ») les risques connus non traités. Elle ne prétend pas à un durcissement
+> production.
 
 ## Secrets & configuration
 
@@ -16,10 +17,12 @@ de secret en dur.
 | `POSTGRES_DB` / `DB_NAME` | `.env` | n/a |
 | `OLLAMA_HOST` / `OLLAMA_PORT` | `.env` / `docker-compose.yml` | n/a |
 
-> ✅ `.env` est bien listé dans [`.gitignore`](../.gitignore). Il ne doit **jamais** être
-> committé.
-> ⚠️ Il n'existe pas de `.env.example` versionné : le contenu minimal est décrit dans le
-> [QUICKSTART](../QUICKSTART.md). Un fichier `python/.env` existe aussi (mêmes valeurs).
+> **Risque** : `.env` figure bien dans [`.gitignore`](../.gitignore), mais il a **déjà été
+> committé** — `.env` et `python/.env` sont actuellement **versionnés** dans le dépôt
+> (`git ls-files` les liste). Il faut les retirer du suivi Git (`git rm --cached`) et
+> considérer les secrets présents comme exposés (les changer).
+> Il n'existe pas de `.env.example` versionné : le contenu minimal est décrit dans le
+> [QUICKSTART](../QUICKSTART.md).
 
 ## Isolation réseau
 
@@ -48,9 +51,9 @@ pip install pip-audit && pip-audit -r python/requirements.txt
 
 - Images `pgvector/pgvector:pg15` (officielle pgvector) et `ollama/ollama:latest`
   (officielle Ollama). L'app est bâtie sur `python:3.11-slim` (image officielle).
-- ⚠️ Conteneurs exécutés en **root** (aucun `USER` non-root dans le Dockerfile ;
+- Conteneurs exécutés en **root** (aucun `USER` non-root dans le Dockerfile ;
   Jupyter lancé avec `--allow-root`).
-- ⚠️ Tags `latest` pour Ollama et les modèles : surface non reproductible.
+- Tags `latest` pour Ollama et les modèles : surface non reproductible.
 
 ## Données & accès
 
@@ -60,11 +63,11 @@ le port Streamlit peut interroger, ajouter et importer des films.
 
 ## Risques connus (non traités)
 
-- ⚠️ **Jupyter sans jeton** : `--NotebookApp.token=''` sur `8888` → exécution de code
+- **Jupyter sans jeton** : `--NotebookApp.token=''` sur `8888` → exécution de code
   arbitraire pour quiconque atteint le port. Acceptable en local isolé, **jamais** à
   exposer sur un réseau.
-- ⚠️ **Mots de passe par défaut** : `postgres`/`postgres` dans `.env`. À changer hors
+- **Mots de passe par défaut** : `postgres`/`postgres` dans `.env`. À changer hors
   démo.
-- ⚠️ **PostgreSQL publié sur l'hôte** (`5432`) avec ces identifiants faibles.
-- ⚠️ **Streamlit lié à `0.0.0.0`** sans authentification.
-- ⚠️ **Aucune limite de débit** sur les appels Ollama / imports CSV.
+- **PostgreSQL publié sur l'hôte** (`5432`) avec ces identifiants faibles.
+- **Streamlit lié à `0.0.0.0`** sans authentification.
+- **Aucune limite de débit** sur les appels Ollama / imports CSV.

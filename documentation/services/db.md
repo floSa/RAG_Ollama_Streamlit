@@ -66,9 +66,9 @@ retries: 5
 ```
 
 ## Points d'attention
-- ⚠️ `db/init.sql` contient `CREATE DATABASE rag_db;` alors que `POSTGRES_DB=rag_db`
+- `db/init.sql` contient `CREATE DATABASE rag_db;` alors que `POSTGRES_DB=rag_db`
   crée déjà cette base → le script d'init peut échouer sur un « database already
   exists » `<à confirmer au runtime>`. `initialize_db.py` recrée de toute façon base,
   table et index de façon idempotente.
-- ⚠️ Divergence de schéma : `init.sql` déclare `title` sans `UNIQUE`, `initialize_db.py`
+- Divergence de schéma : `init.sql` déclare `title` sans `UNIQUE`, `initialize_db.py`
   avec `UNIQUE`. L'`ON CONFLICT (title)` de `add_film()` requiert la contrainte unique.

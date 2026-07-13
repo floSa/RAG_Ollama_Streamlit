@@ -156,11 +156,11 @@ Voir [SECURITY.md](SECURITY.md) pour le détail. Principaux points :
 
 | Durcissement | État |
 |---|---|
-| Secrets dans `.env` non versionné (`.gitignore`) | Présent |
+| `.env` listé dans `.gitignore` mais **committé** dans le dépôt (`.env`, `python/.env`) | Risque |
 | Réseau privé `app-network`, services joints par nom | Présent |
-| Jupyter exposé sans jeton (`--NotebookApp.token=''`) sur `8888` | ⚠️ Risque |
+| Jupyter exposé sans jeton (`--NotebookApp.token=''`) sur `8888` | Risque |
 | Streamlit lié à `0.0.0.0`, exposé sur l'hôte (`8502`) | Local / démo |
-| Mots de passe par défaut (`postgres`/`postgres`) | ⚠️ Démo |
+| Mots de passe par défaut (`postgres`/`postgres`) | Démo |
 
 ---
 

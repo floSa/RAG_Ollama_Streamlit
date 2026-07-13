@@ -64,5 +64,5 @@ docker compose logs -f rag-python
   **Cause** : le pull de `phi4-mini` / `nomic-embed-text` prend du temps au premier boot.
   **Solution** : `initialize_db.py` attend `nomic-embed-text` via `/api/tags`
   (60 tentatives × 2 s) et `entrypoint.sh` attend l'API Ollama (timeout 300 s).
-- ⚠️ **Jupyter sans authentification** : lancé avec `--NotebookApp.token=''` sur `8888`.
+- **Jupyter sans authentification** : lancé avec `--NotebookApp.token=''` sur `8888`.
   Acceptable en local, à ne pas exposer. Voir [SECURITY.md](SECURITY.md).
