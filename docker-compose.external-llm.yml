@@ -8,12 +8,9 @@
 #
 # Prérequis : `make up` dans llm-service (Ollama central + réseau « llm-net »).
 #
-# ⚠️ Ce projet code EN DUR ses modèles (python/streamlit_app.py) :
-#     "phi4-mini:latest" (chat) et "nomic-embed-text:latest" (embeddings).
-#   Pour tourner branché, le service central doit les provisionner : ajouter
-#   « phi4-mini nomic-embed-text » à OLLAMA_MODELS dans llm-service/.env
-#   (nomic-embed-text y est déjà par défaut). À défaut, basculer le code sur
-#   gemma4:e4b.
+# Modèles (codés dans python/streamlit_app.py) : "gemma4:e4b" (chat) et
+# "nomic-embed-text:latest" (embeddings) — tous deux provisionnés par défaut
+# côté central (OLLAMA_MODELS), donc rien à ajouter.
 services:
   # 1. Neutralise l'Ollama local.
   ollama:
