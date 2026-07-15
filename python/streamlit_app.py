@@ -60,7 +60,7 @@ def clean_query_with_llm(user_query):
         response = requests.post(
             f"{OLLAMA_BASE}/api/chat",
             json={
-                "model": "phi4-mini:latest",
+                "model": "gemma4:e4b",
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False,
                 "options": {"temperature": 0} # Déterministe
@@ -118,7 +118,7 @@ QUESTION:
         response = requests.post(
             f"{OLLAMA_BASE}/api/chat",
             json={
-                "model": "phi4-mini:latest",
+                "model": "gemma4:e4b",
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False
             },
